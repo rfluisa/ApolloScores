@@ -7,4 +7,5 @@ app = Flask(__name__, template_folder='templates')
 def init():
     return render_template('index.html', titulo="ApolloScores")
 
-app.run()
+if __name__ == '__main__':
+    app.run()
