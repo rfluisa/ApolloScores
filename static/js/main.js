@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     tk.setOptions({
         scale: 35,
-        portrait: true,
+        landscape:false ,
         adjustPageWidth: true
     });
   }
