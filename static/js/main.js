@@ -1,13 +1,10 @@
-document.addEventListener("DOMContentLoaded", (event) => {
+function handleFiles() {
+  const fileList = this.files; /* now you can work with the file list */
+  
   Module.onRuntimeInitialized = async _ => {
     let tk = new verovio.toolkit();
-    console.log("Verovio has loaded!");
-    
-    if(typeof fileList !== 'undefined')
-      fetch(fileList[0])
-    else
-      fetch("https://www.verovio.org/examples/downloads/Schubert_Lindenbaum.mei")
-
+      
+    fetch(fileList[0])
     .then( (response) => response.text() )
     .then( (meiXML) => {
         let svg = tk.renderData(meiXML, {});
@@ -20,13 +17,4 @@ document.addEventListener("DOMContentLoaded", (event) => {
         adjustPageWidth: true
     });
   }
-});
-
-const inputElement = document.getElementById("input");
-
-if(inputElement !== null)
-  inputElement.addEventListener("change", handleFiles, false);
-
-function handleFiles() {
-  const fileList = this.files; /* now you can work with the file list */
 }
