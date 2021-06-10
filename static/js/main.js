@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       fetch(fileList[0])
     else
       fetch("https://www.verovio.org/examples/downloads/Schubert_Lindenbaum.mei")
-      
+
     .then( (response) => response.text() )
     .then( (meiXML) => {
         let svg = tk.renderData(meiXML, {});
@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 const inputElement = document.getElementById("input");
 
-inputElement.addEventListener("change", handleFiles, false);
+if(inputElement !== null)
+  inputElement.addEventListener("change", handleFiles, false);
 
 function handleFiles() {
   const fileList = this.files; /* now you can work with the file list */
