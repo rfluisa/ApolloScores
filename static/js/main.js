@@ -1,80 +1,45 @@
-/*
-<!-- Score.vue -->
-<template>
-    <div v-html="renderedScore"></div>
-</template>
 
-<script>
+const app = {}
 
-*/
-/*
-import verovio from 'verovio'; // load verovio as a webpack external
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded()')
+  console.log('initializeToolkit()')
+  initializeToolkit()
+  const input = document.getElementById('input')
+  input.addEventListener('change', () => {
+    app.file = input.files[0]
+    console.log('app.file', app.file)
+  })
+  const submit = document.getElementById('submit')
+  submit.addEventListener('click', async () => {
+    console.log('File about to be uploaded!')
+    await uploadFile(app.file)
+    console.log('File uploaded!')
+  })
+})
 
-export default {
-    data() {
-        return {
-            verovioToolkit: null,
-            renderedScore: null,
-            scale: 40,
-            landscape: false,
-            page: 1,
-        };
-    },
-    created() {
-        this.verovioToolkit = new verovio.toolkit();
-    },
-    mounted() {
-        this.setVerovioOptions();
-        this.loadScoreFile('/path/to/score.mei');
-    },
-    watch: {
-        scale() {
-            this.rerenderCurrentView();
-        },
-        page(value) {
-            this.rerenderCurrentView();
-        },
-    },
-    methods: {
-        setVerovioOptions() {
-            this.verovioToolkit.setOptions({
-                scale: this.scale,
-                noHeader: true,
-                noFooter: true,
-                landscape: false,
-                pageWidth: this.width * (100 / this.scale),
-                pageHeight: this.height * (100 / this.scale),
-            });
-        },
-        async loadScoreFile(path) {
-            const response = await fetch(path);
-            const data = await response.text();
-            this.renderedScore = this.verovioToolkit.renderData(data, {});
-        },
-        rerenderCurrentView() {
-            this.setVerovioOptions();
-            this.verovioToolkit.redoLayout();
-            this.renderedScore = this.verovioToolkit.renderToSVG(this.page, {});
-        },
-    },
-};*/
-function handleFiles() {
-  const fileList = this.files; /* now you can work with the file list */
-  
-  Module.onRuntimeInitialized = async _ => {
-    let tk = new verovio.toolkit();
-      
-    fetch(fileList[0])
-    .then( (response) => response.text() )
-    .then( (meiXML) => {
-        let svg = tk.renderData(meiXML, {});
-        document.getElementById("rendering").innerHTML = svg;
-      });
-
-    tk.setOptions({
-        scale: 35,
-        landscape:false ,
-        adjustPageWidth: true
+function initializeToolkit () {
+  Module.onRuntimeInitialized = async () => {
+    console.log('Module.onRuntimeInitialized')
+    app.tk = new verovio.toolkit();
+    app.tk.setOptions({
+      scale: 35,
+      landscape:false ,
+      adjustPageWidth: true
     });
   }
+}
+
+async function uploadFile (file) {
+  const body = new FormData()
+  body.append('file', file)
+  
+  const response = await fetch('/', { method: 'POST', body })
+  console.log('response', response)
+  const responseText = await response.text()
+  console.log('uploadFile/responseText', responseText)
+
+  // responseText needs to be a valid MEI
+  const svg = app.tk.renderData(responseText, {});
+  document.getElementById('rendering').innerHTML = svg;
 }

@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link rel="stylesheet" href="static/css/style.css">
-    <script src="static/js/main.js"></script>
     <script src="http://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js" defer></script>
+    <script src="static/js/main.js" defer></script>
     <script src="https://kit.fontawesome.com/fd12c94291.js" crossorigin="anonymous"></script>
     <title>ApolloScores</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <nav>
-        <div class="logo"><img src="static/img/logo.png" alt="logo"><p>{{ titulo }}</p></div>
-        <div class="controls">
-            <form method="POST" action="" enctype="multipart/form-data">        
-                <input type="file" id="input"/>
-                <input type="submit" id="submit" >
-            </form>
-            <button><i class="fas fa-play"></i><i class="fas fa-pause"></i></button>
-            <button><i class="fas fa-stop"></i></button>
-            <button><i class="fas fa-ellipsis-h"></i></button>
-        </div>
+      <div class="logo"><img src="static/img/logo.png" alt="logo"><p>{{ titulo }}</p></div>
+      <div class="controls">
+        <form 
+            method="POST"
+            action=""
+            enctype="multipart/form-data"
+            onsubmit="return false">
+          <input type="file" id="input" />
+          <input type="button" id="submit" value="Submit" onclick="return false">
+        </form>
+        <button><i class="fas fa-play"></i><i class="fas fa-pause"></i></button>
+        <button><i class="fas fa-stop"></i></button>
+        <button><i class="fas fa-ellipsis-h"></i></button>
+      </div>
     </nav>
     <div class="output-results">
-        <div></div>
-        <div id="rendering"></div>
+      <div></div>
+      <div id="rendering"></div>
     </div>
-</body>
+  </body>
 </html>
